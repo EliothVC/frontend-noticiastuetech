@@ -1,0 +1,195 @@
+---
+import { Image } from "astro:assets"; // aca se importa la funcion Image de astro:assets
+import { fetchFromAPI, STRAPI_BASE_URL } from "../lib/conection.ts"; // aca se importa la funcion fetchFromAPI
+
+interface Noticia { // datos de las noticias
+    documentId: string;
+    titulo: string;
+    descripcion: string;
+    fecha: string;
+    imagen: {
+        url: string;
+    };
+    categoria: string;
+    destacado: boolean;
+}
+
+const data = await fetchFromAPI('home'); // aca se llamamos los datos del single type: home
+const noticias: Noticia[] = await fetchFromAPI('noticias'); // aca se llamamos los datos del Collection Type: noticias
+
+const destacado = noticias.filter((item)=>item.destacado); // aca se filtran las noticias destacadas
+const juegos = noticias.filter((item)=>item.categoria === 'videojuegos').slice(0, 3); // aca se filtran las noticias de videojuegos
+const tecnologia = noticias.filter((item)=>item.categoria === 'tecnologia').slice(0, 3); // aca se filtran las noticias de tecnologia
+---
+
+<!-- Sección Hero -->
+<section class="relative w-full h-[350px] md:h-[450px] lg:h-[500px] bg-cover bg-center bg-no-repeat">
+    <div class="absolute inset-0">
+        <Image 
+            src={`${STRAPI_BASE_URL}${data.hero.url}` || ''}
+            alt="hero"
+            class="w-full h-full object-cover"
+            inferSize={true}
+        />
+    </div>
+
+    <div class="relative z-20 flex items-center justify-center h-full bg-black/40">
+        <div class="container mx-auto px-4 text-center text-white">
+            <h1 class="font-bold text-4xl md:text-6xl lg:text-7xl uppercase">
+                {data.titulo}
+            </h1>
+            <h2 class="font-light text-lg md:text-2xl lg:text-3xl mt-4 md:px-10 lg:px-40">
+                {data.descripcion}
+            </h2>
+        </div>
+    </div>
+</section>
+
+<!-- Noticias Destacadas -->
+<section class="py-16 bg-linear-to-r from-blue-400 text-white">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">{data.titulo2}</h2>
+        <!-- Noticias Destacadas -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {destacado.map((item)=>(
+                <article class="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 hover:shadow-lg transform hover:-translate-y-1.5">
+                    <div class="relative">
+                        <span class="absolute top-4 left-4 bg-blue-400 px-3 py-3 rounded-full text-sm font-medium">
+                            {item.categoria}
+                        </span>
+                        <Image
+                            src={`${STRAPI_BASE_URL}${item.imagen.url}` || ''}
+                            alt={item.titulo}
+                            class="w-full h-48 object-cover"
+                            inferSize={true}
+                        />
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <span>{item.fecha}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">{item.titulo}</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">{item.descripcion.slice(0, 130)}...</p>
+                        <a href={`/noticias/${item.documentId}`} class="text-blue-400 font-medium hover:underline inline-flex items-center">
+                            Leer más >
+                        </a>
+                    </div>
+                </article>
+            ))}
+        </div>
+    </div>
+</section>
+
+<!-- Nuestro Objetivo -->
+<section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row items-center gap-12">
+            <div class="lg:w-1/2">
+                <Image 
+                    src={`${STRAPI_BASE_URL}${data.imagen2.url}` || ''}
+                    alt="hero"
+                    class="rounded-lg shadow-md w-full"
+                    inferSize={true}
+                />
+            </div>
+
+            <div class="lg:w-1/2">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">{data.titulo3}</h2>
+                <p class="text-gray-600 mb-6">{data.descripcion2}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Noticias Videojuegos -->
+<section class="container mx-auto px-4 py-16 bg-linear-to-l from-blue-400">
+    <!-- titulo y boton de ver mas -->
+    <div class="flex justify-between items-center mb-8 pb-4 border-b-2 border-gray-800">
+        <h2 class="text-2xl font-bold">{data.titulo4}</h2>
+        <a href="/videojuegos" class="text-gray-800 font-semibold hover:underline hover:text-white transtion duration-300">
+            {data.descripcion3}
+        </a>
+    </div>
+        <!-- Noticias de Videojuegos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {juegos.map((item)=>(
+                <article class="bg-white text-white rounded-lg overflow-hidden shadow-md transition duration-300 hover:shadow-lg transform hover:-translate-y-1.5">
+                    <div class="relative">
+                        <span class="absolute top-4 left-4 bg-blue-400 px-3 py-3 rounded-full text-sm font-medium">
+                            {item.categoria}
+                        </span>
+                        <Image
+                            src={`${STRAPI_BASE_URL}${item.imagen.url}` || ''}
+                            alt={item.titulo}
+                            class="w-full h-48 object-cover"
+                            inferSize={true}
+                        />
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-cente text-sm text-gray-500 mb-3">
+                            <span>{item.fecha}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">{item.titulo}</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">{item.descripcion.slice(0, 130)}...</p>
+                        <a href={`/noticias/${item.documentId}`} class="text-blue-400 font-medium hover:underline inline-flex items-center">
+                            Leer más >
+                        </a>
+                    </div>
+                </article>
+            ))}
+    </div>
+</section>
+
+<!-- Noticias Tecnologia -->
+<section class="container mx-auto px-4 py-16 bg-linear-to-l from-blue-400">
+    <!-- titulo y boton de ver mas -->
+    <div class="flex justify-between items-center mb-8 pb-4 border-b-2 border-gray-800">
+        <h2 class="text-2xl font-bold">{data.titulo5}</h2>
+        <a href="/tecnologia" class="text-gray-800 font-semibold hover:underline hover:text-white transtion duration-300">
+            {data.descripcion3}
+        </a>
+    </div>
+        <!-- Noticias de Tecnologia -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {tecnologia.map((item)=>(
+                <article class="bg-white text-white rounded-lg overflow-hidden shadow-md transition duration-300 hover:shadow-lg transform hover:-translate-y-1.5">
+                    <div class="relative">
+                        <span class="absolute top-4 left-4 bg-blue-400 px-3 py-3 rounded-full text-sm font-medium">
+                            {item.categoria}
+                        </span>
+                        <Image
+                            src={`${STRAPI_BASE_URL}${item.imagen.url}` || ''}
+                            alt={item.titulo}
+                            class="w-full h-48 object-cover"
+                            inferSize={true}
+                        />
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <span>{item.fecha}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">{item.titulo}</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">{item.descripcion.slice(0, 130)}...</p>
+                        <a href={`/noticias/${item.documentId}`} class="text-blue-400 font-medium hover:underline inline-flex items-center">
+                            Leer más >
+                        </a>
+                    </div>
+                </article>
+            ))}
+        </div>
+</section>
+
+<!-- Contacto -->
+<section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">{data.titulo6}</h2>
+        <p class="text-xl max-w-3xl mx-auto mb-8">
+            {data.descripcion4}
+        </p>
+        <div class="text-center mt-12">
+            <a href="/contacto" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 inline-flex items-center justify-center mx-auto">
+                {data.descripcion5}
+            </a>
+        </div>
+    </div>
+</section>
