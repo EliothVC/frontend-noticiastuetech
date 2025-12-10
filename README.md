@@ -31,4 +31,4 @@ El proyecto correrá en ``http://localhost:4321/``
 
 El backend de este proyecto se encuentra en el siguiente link:
 
-``https://github.com/EliothVC/backend-noticiastuetech.git``
+``https://github.com/Cristofer-Marquez0/backend-noticiatuetech.git``
