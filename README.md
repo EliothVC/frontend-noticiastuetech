@@ -1,46 +1,34 @@
-# Astro Starter Kit: Basics
+# Proyecto Noticias Tue Tech
 
-```sh
-npm create astro@latest -- --template basics
-```
+Proyecto final para la asignatura de **Programación**.
+Sitio web de Noticias ficticia, creado con Astro e implementado con Strapi y TailwindCSS.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Configuración Para Iniciar el Proyecto
 
-## 🚀 Project Structure
+Luego de clonar el proyecto, se debe crear un archivo llamado ``.env`` en la carpeta raiz del proyecto (/frontend-noticiastuetech), escribiendo lo siguiente dentro de su contenido:
+``STRAPI_API_URL=https://app-strapi-xfml.onrender.com/api``
 
-Inside of your Astro project, you'll see the following folders and files:
+Seguidamente de crear este archivo, se debe abrir una nueva terminal y ejecutar los siguientes comandos:
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+```npm install```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+```npm run dev```
 
-## 🧞 Commands
+El proyecto correrá en ``http://localhost:4321/``
 
-All commands are run from the root of the project, from a terminal:
+## Integrantes y Contribuciones
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+*Este proyecto fue desarrollado de manera colaborativa. A continuación se detalla la responsabilidad principal de cada uno:*
 
-## 👀 Want to learn more?
+| Integrante                | Contribución Especifica                       |
+| :------------------------ | :---------------------------------------------|
+| Elioth Vargas (Lider del proyecto / Lider Frontend)             | Desarrollo de la arquitectura de componentes, lógica de consumo de datos (API Fetch), implementación de rutas dinámicas y maquetación general.                         |
+| Benjamin Vergara (Frontend / Responsive)      | Configuración responsive e Ideas de diseño de paginas    |
+| Cristofer Marquez (Lider Backend)          | Configuración de Strapi, creación de Content Types.|
+| Constanza Diaz (Backend)           | Generación y organización de todo el contenido dinámico del sitio.    |
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Backend del Proyecto
+
+El backend de este proyecto se encuentra en el siguiente link:
+
+````
